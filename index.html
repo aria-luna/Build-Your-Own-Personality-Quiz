@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>What Bird Are You?</title>
-  <link rel="icon" type="image/x-icon" href="/img/ideas.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .selected {
@@ -17,7 +16,7 @@
 <body>
   <h1 class="text-center mt-4">What Bird Are You?</h1>
 
-  <!-- Start quiz element 1 -->
+  <!-- Start Question 1 -->
   <div class="container d-flex justify-content-center" id="question-1">
     <div class="card my-4 p-4 question-block" style="width: 75%;">
       <h4 class="mb-3">What’s your ideal weekend activity?</h4>
@@ -37,9 +36,8 @@
       </div>
     </div>
   </div>
-  <!-- End quiz element 1 -->
 
-  <!-- Start quiz element 2 -->
+  <!-- Start Question 2 -->
   <div class="container d-flex justify-content-center" id="question-2">
     <div class="card my-4 p-4 question-block" style="width: 75%;">
       <h4 class="mb-3">What best describes your personality?</h4>
@@ -59,9 +57,8 @@
       </div>
     </div>
   </div>
-  <!-- End quiz element 2 -->
 
-  <!-- Start quiz element 3 -->
+  <!-- Start Question 3 -->
   <div class="container d-flex justify-content-center" id="question-3">
     <div class="card my-4 p-4 question-block" style="width: 75%;">
       <h4 class="mb-3">Pick a place you’d love to live in:</h4>
@@ -81,14 +78,13 @@
       </div>
     </div>
   </div>
-  <!-- End quiz element 3 -->
 
-  <!-- Show results button -->
+  <!-- Result Button -->
   <div class="container d-flex justify-content-center">
-    <button id="show-result" class="btn btn-success my-4">Show Results</button>
+    <button id="give-results" class="btn btn-success my-4">Give Me the Results</button>
   </div>
 
-  <!-- Output result area -->
+  <!-- Result Display -->
   <div class="container d-flex justify-content-center">
     <div id="result-container" class="card p-4 mb-4" style="width: 75%; display: none;">
       <h3>Your Result:</h3>
@@ -96,7 +92,7 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
+  <!-- JavaScript Logic -->
   <script>
     const userAnswers = {};
     const questionBlocks = document.querySelectorAll('.question-block');
@@ -107,17 +103,15 @@
 
       buttons.forEach(button => {
         button.addEventListener('click', () => {
-          // Remove selected class from all buttons in this block
+          // Remove selected class from all buttons in the block
           buttons.forEach(btn => btn.classList.remove('selected'));
-
-          // Add selected class to clicked button
           button.classList.add('selected');
 
-          // Get answer and point values
+          // Get selected answer and points
           const selectedAnswer = button.getAttribute('data-answer');
           const points = parseInt(button.getAttribute('data-points'));
 
-          // Store in userAnswers object
+          // Store in object
           userAnswers[questionNumber] = {
             answer: selectedAnswer,
             points: points
@@ -126,11 +120,13 @@
       });
     });
 
-    document.getElementById('show-result').addEventListener('click', () => {
+    function displayResult() {
+      const resultText = document.getElementById('result-text');
+      const resultContainer = document.getElementById('result-container');
+
       let totalPoints = 0;
       const totalQuestions = questionBlocks.length;
 
-      // Check if all questions are answered
       if (Object.keys(userAnswers).length < totalQuestions) {
         alert('Please answer all questions before viewing your result.');
         return;
@@ -139,22 +135,24 @@
       for (let q in userAnswers) {
         totalPoints += userAnswers[q].points;
       }
+
       let result = '';
       if (totalPoints >= 4 && totalPoints <= 6) {
-        result = 'Explorer';
+        result = Parrot- Explorer: You are free-spirited and adventurous!';
       } else if (totalPoints >= 7 && totalPoints <= 9) {
-        result = 'Artist';
+        result = 'Dove-Artist: You are calm, thoughtful, and creative!';
       } else if (totalPoints >= 10 && totalPoints <= 12) {
-        result = 'Leader';
+        result = Eagle- Leader: You are bold, confident, and driven!';
       } else if (totalPoints >= 13 && totalPoints <= 16) {
-        result = 'Thinker';
-      } else {
-        result = 'Unknown';
+        result = Owl- Thinker: You are wise and strategic!',
       }
 
-      document.getElementById('result-text').textContent = `You're a ${result}!`;
-      document.getElementById('result-container').style.display = 'block';
-    });
+      resultText.textContent = result;
+      resultContainer.style.display = 'block';
+    }
+
+    // Attach event listener
+    document.getElementById('give-results').addEventListener('click', displayResult);
   </script>
 </body>
 </html>
