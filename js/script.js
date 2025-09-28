@@ -56,7 +56,7 @@ function displayResult() {
   } else if (totalPoints >= 10 && totalPoints <= 12) {
     result = Eagle- Leader: You are bold, confident, and driven!';
   } else if (totalPoints >= 13 && totalPoints <= 16) {
-    result = Owl-Thinker: You are wise, introspective, and strategic!';
+    result = Owl-Thinker: You are wise, and strategic!';
      }
 
   // Update result in DOM
